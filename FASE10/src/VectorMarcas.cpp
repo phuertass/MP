@@ -23,7 +23,7 @@
 #include "utils.h"
 
 #include "VectorMarcas.h"
-#define DEBUG_FUNCS_VECTOR_DINAMICO
+//#define DEBUG_FUNCS_VECTOR_DINAMICO
 
 using namespace std;
 
@@ -467,9 +467,9 @@ void VectorMarcas::Clona(const VectorMarcas &origen)
 void VectorMarcas::AniadeVectorMarcas(const TipoBaseVector valor)
 {
 	// Si no cabe --> redimensionar
-	cout << *this << endl;
-	cout << "num_marcas: " << num_marcas << endl;
-	cout << "capacidad: " << capacidad << endl;
+	//cout << *this << endl;
+	//cout << "num_marcas: " << num_marcas << endl;
+	//cout << "capacidad: " << capacidad << endl;
 	if (num_marcas == capacidad)
 	{
 		//cout << "Redimensionando vector" << endl;
@@ -481,7 +481,7 @@ void VectorMarcas::AniadeVectorMarcas(const TipoBaseVector valor)
 
 	las_marcas[num_marcas] = valor;
 	num_marcas++;
-	cout << *this << endl;
+	//cout << *this << endl;
 }
 
 /***************************************************************************/

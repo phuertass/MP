@@ -94,7 +94,6 @@ MatrizMarcas ::MatrizMarcas(const string &nombre_fichero)
         cout << "El fichero " << nombre_fichero << " es texto" << endl;
         LeerMatrizMarcasTxt(nombre_fichero);
     }
-
 }
 
 /**
@@ -136,7 +135,8 @@ inline ostream &SalidaFormatRegistro(ostream &os, const RegistroDeMarca &r)
     return os;
 }
 
-inline ostream & FormatFecha(ostream &os, const Fecha & f){
+inline ostream &FormatFecha(ostream &os, const Fecha &f)
+{
     int dia = f.GetDia();
     int mes = f.GetMes();
     int anio = f.GetAnio();
@@ -145,12 +145,10 @@ inline ostream & FormatFecha(ostream &os, const Fecha & f){
     string mesd = to_string(mes);
     string aniod = to_string(anio);
 
-
     os << setfill('0') << setw(2) << diad << "/";
     os << setfill('0') << setw(2) << mesd << "/";
     os << setfill('0') << setw(4) << aniod << "\t";
 }
-
 
 /**
  * @brief Guarda un dato MatrizMarcas en un fichero de texto llamado nombre. El
@@ -163,9 +161,9 @@ inline ostream & FormatFecha(ostream &os, const Fecha & f){
 
 void MatrizMarcas::EscribirMatrizMarcas(const string &nombre_fichero, bool txt) const
 {
-    if(txt)
+    if (txt)
         EscribirMatrizMarcasTxt(nombre_fichero);
-    else
+    else if (!txt)
         EscribirMatrizMarcasBin(nombre_fichero);
 }
 
@@ -177,7 +175,8 @@ void MatrizMarcas::EscribirMatrizMarcas(const string &nombre_fichero, bool txt) 
  * @cond La matriz no se modifica
  * @cond Si la matriz es vacia no se crea el fichero
  */
-void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const {
+void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const
+{
     cout << "\nESCRITURA BINARIA" << endl;
 
     ofstream fo;
@@ -187,58 +186,56 @@ void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const {
         cout << "No se puede abrir el fichero " << nombre << endl;
         exit(1);
     }
-    
-    char * cad = "MARCAS_BIN\n";
+
+    char *cad = "MARCAS_BIN\n";
     fo.write(cad, strlen(cad));
-    
-    //cad = "# Comentario escrito desde la clase MatrizMarcas\n";
-    //fo.write(cad, strlen(cad));
+
+    // cad = "# Comentario escrito desde la clase MatrizMarcas\n";
+    // fo.write(cad, strlen(cad));
     int num_marcas = this->getNumPruebas();
     fo.write((char *)&num_marcas, sizeof(int));
-    
-    for(int i=0; i<getNumPruebas(); i++)
+
+    for (int i = 0; i < getNumPruebas(); i++)
     {
         string nombre_prueba = pruebas[i].GetNombre();
         int tam_prueba = nombre_prueba.size();
         fo.write((char *)&tam_prueba, sizeof(int));
-        fo.write( (const char *)nombre_prueba.c_str(), nombre_prueba.length());
+        fo.write((const char *)nombre_prueba.c_str(), nombre_prueba.length());
     }
 
-    for(int i=0; i<getNumPruebas() ; i++)
+    for (int i = 0; i < getNumPruebas(); i++)
     {
-        for(int j=1; j<= this->pruebas[i].GetNum_marcas(); j++)
+        for (int j = 1; j <= this->pruebas[i].GetNum_marcas(); j++)
         {
             string nombre_prueba = pruebas[i].GetNombre();
             int tam_prueba = nombre_prueba.size();
             fo.write((char *)&tam_prueba, sizeof(int));
-            //cout << "Nombre de marca es " << nombre_prueba << endl;
-            fo.write( (const char *)nombre_prueba.c_str(), nombre_prueba.length());
+            // cout << "Nombre de marca es " << nombre_prueba << endl;
+            fo.write((const char *)nombre_prueba.c_str(), nombre_prueba.length());
 
             RegistroDeMarca r = this->pruebas[i][j];
             Fecha f = r.GetFecha();
             string licencia = r.GetLicencia();
             int sizelicencia = licencia.size();
-            //cout << licencia << " SIZE " << sizelicencia << endl;
+            // cout << licencia << " SIZE " << sizelicencia << endl;
 
-            const char * licenciac = licencia.c_str();
-            //cout << licenciac << " " << strlen(licenciac) << endl;
+            const char *licenciac = licencia.c_str();
+            // cout << licenciac << " " << strlen(licenciac) << endl;
             Tiempo t = r.GetTiempo();
 
             // Debemos escribir la fecha con el formato de dia/mes/anio
-            //std::stringstream ss;
-            //FormatFecha(ss, f);
-            //string fecha = ss.str();            
-            
-            // Escribo la fecha 
-            fo.write((char *)&f , sizeof(Fecha));
+            // std::stringstream ss;
+            // FormatFecha(ss, f);
+            // string fecha = ss.str();
+
+            // Escribo la fecha
+            fo.write((char *)&f, sizeof(Fecha));
             fo.write((char *)&sizelicencia, sizeof(int));
             fo.write(licenciac, sizelicencia);
-            //fo.write((char *)&licencia, sizeof(string));
+            // fo.write((char *)&licencia, sizeof(string));
             fo.write((char *)&t, sizeof(Tiempo));
         }
     }
-
-
 
     fo.close();
 };
@@ -251,7 +248,8 @@ void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const {
  * @cond La matriz no se modifica
  * @cond Si la matriz es vacia no se crea el fichero
  */
-void MatrizMarcas::EscribirMatrizMarcasTxt(const string &nombre) const {
+void MatrizMarcas::EscribirMatrizMarcasTxt(const string &nombre) const
+{
     ofstream fo;
     fo.open(nombre);
     if (!fo)
@@ -309,13 +307,13 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
 
     cout.setf(ios::fixed, ios::showpoint);
 
-    //cout << "Iniciando lectura de fichero binario " << nombre << endl;
+    // cout << "Iniciando lectura de fichero binario " << nombre << endl;
 
     // Lectura de la cabecera del fichero de marcas binario
     string cabecera;
     getline(fi, cabecera);
-    //cout << "Cabecera: " << cabecera << endl;
-    // Ignoramos los comentarios que pueda tener el fichero
+    // cout << "Cabecera: " << cabecera << endl;
+    //  Ignoramos los comentarios que pueda tener el fichero
     while (fi.peek() == '#')
         fi.ignore();
     // Lectura del numero de pruebas del fichero
@@ -343,15 +341,15 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
         // de numero*sizeof(char)
         fi.read(buffer, sizeof(char) * numero);
         string buffereado = string(buffer);
-        //cout << "TAMAÑO ESPERADO: " << numero << endl;
-        //cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
-        
+        // cout << "TAMAÑO ESPERADO: " << numero << endl;
+        // cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
+
         while (buffereado.size() > numero)
             buffereado.pop_back();
-        
-        //cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
+
+        // cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
         nombre_pruebas[i] = buffereado;
-        //nombre_pruebas[i] = string(buffer);
+        // nombre_pruebas[i] = string(buffer);
         cout << "Nombre de la prueba " << i + 1 << ": " << nombre_pruebas[i] << endl;
 
         *this += (VectorMarcas(0, nombre_pruebas[i]));
@@ -368,47 +366,47 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
         // Lectura del tamano del nombre de la prueba
         fi.read(buffer, sizeof(int));
         tamanio = *(int *)buffer;
-        //cout << "\nTamano del nombre de la prueba: " << tamanio << endl;
+        // cout << "\nTamano del nombre de la prueba: " << tamanio << endl;
 
         // Lectura del nombre de la prueba
         fi.read(buffer, sizeof(char) * (tamanio));
         string nombre_prueba = string(buffer);
-        //cout << "SIZE DEL STRING: " << nombre_prueba.size() << endl;
-        //cout << "Nombre de la prueba: " << nombre_prueba << endl;
+        // cout << "SIZE DEL STRING: " << nombre_prueba.size() << endl;
+        // cout << "Nombre de la prueba: " << nombre_prueba << endl;
         while (nombre_prueba.size() > tamanio)
             nombre_prueba.pop_back();
 
-        //cout << "Nombre de la prueba arreglado: " << nombre_prueba << endl;
+        // cout << "Nombre de la prueba arreglado: " << nombre_prueba << endl;
 
         Fecha f;
         fi.read(reinterpret_cast<char *>(&f), sizeof(Fecha));
-        //cout << "Fecha: " << f << endl;
+        // cout << "Fecha: " << f << endl;
 
         // Lectura del tamaño de la licencia a leer
         fi.read(buffer, sizeof(int));
         tamanio = *(int *)buffer;
-        //cout << "Tamano de la licencia: " << tamanio << endl;
-        //  Lectura de la licencia
+        // cout << "Tamano de la licencia: " << tamanio << endl;
+        //   Lectura de la licencia
         fi.read(buffer, sizeof(char) * tamanio);
         string licencia = string(buffer);
-        //cout << "Licencia: " << licencia << endl;
+        // cout << "Licencia: " << licencia << endl;
         while (licencia.size() > tamanio)
             licencia.pop_back();
-        //cout << "Licencia leida arreglada: " << licencia << endl;
+        // cout << "Licencia leida arreglada: " << licencia << endl;
 
         // Lectura del tiempo
         Tiempo t;
         fi.read(reinterpret_cast<char *>(&t), sizeof(Tiempo));
-        //cout << "Tiempo: " << t << endl;
+        // cout << "Tiempo: " << t << endl;
 
         RegistroDeMarca r(f, licencia, t);
-        //cout << "Registro de marca leido: " << r << endl;
+        // cout << "Registro de marca leido: " << r << endl;
 
         for (int i = 0; i < num_pruebas; i++)
             if (nombre_prueba == this->pruebas[i].GetNombre())
                 this->pruebas[i] += r;
 
-        //cout << "-----------------------------------------------------" << endl;
+        // cout << "-----------------------------------------------------" << endl;
     }
 
     fi.close();
@@ -435,7 +433,6 @@ void MatrizMarcas::LeerMatrizMarcasTxt(const string &nombre_fichero)
 
     char c = fi.peek();
 
-
     // Lee fichero de marcas
     if (c == 'M')
     {
@@ -445,14 +442,14 @@ void MatrizMarcas::LeerMatrizMarcasTxt(const string &nombre_fichero)
         cabecera = "";
         while (cabecera[0] == '#' or cabecera.length() == 0)
         {
-             getline(fi, cabecera);
-             // cout << "cab---->" << cabecera << endl;
-             if (cabecera[0] != '#')
-                 break;
-         }
+            getline(fi, cabecera);
+            // cout << "cab---->" << cabecera << endl;
+            if (cabecera[0] != '#')
+                break;
+        }
 
-        //while (fi.peek() == '#')
-        //    fi.ignore(1000, '\n');
+        // while (fi.peek() == '#')
+        //     fi.ignore(1000, '\n');
 
         fi >> *this;
     }
@@ -569,9 +566,38 @@ MatrizMarcas &MatrizMarcas::operator=(const MatrizMarcas &m)
 MatrizMarcas operator+(const MatrizMarcas &m1, const MatrizMarcas &m2)
 {
     MatrizMarcas m3(m1);
-    for (int i = 0; i < m2.utilizados; i++)
-    {    
-        m3.AniadeVectorMarcas(m2.pruebas[i]);
+    for (int i = 0; i < m3.utilizados; i++)
+    {
+        for (int j = 0; j < m2.utilizados; j++)
+        {
+
+            string nombre1 = m3.pruebas[i].GetNombre();
+            string nombre2 = m2.pruebas[j].GetNombre();
+
+            //cout << "nombre1: " << nombre1 << endl;
+            //cout << "nombre2: " << nombre2 << endl;
+
+            bool iguales = nombre1 == nombre2;
+            //(iguales) ? cout << "son iguales" << endl : cout << "no son iguales" << endl;
+
+            if (iguales)
+            {
+
+                VectorMarcas v1 = m3.pruebas[i];
+                VectorMarcas v2 = m2.pruebas[j];
+
+                //cout << "v1: " << v1 << endl;
+                //cout << "v2: " << v2 << endl;
+
+                VectorMarcas v3 = v1 + v2;
+                //cout << "v3: " << v3 << endl;
+
+                v3.SetNombre(nombre1);
+                m3.pruebas[i] = v3;
+
+                //cout << "MATRIZ AFTER: " << m3 << endl;
+            }
+        }
     }
     return m3;
 }
@@ -694,8 +720,6 @@ VectorMarcas MatrizMarcas::operator[](int i) const
 {
     return pruebas[i - 1];
 }
-
-
 
 /**
  * @brief Sobrecarga del operador <<
@@ -853,8 +877,8 @@ void MatrizMarcas ::AniadeVectorMarcas(const VectorMarcas v)
     // cout << "Capacidad: " << capacidad << endl;
     if (utilizados == capacidad)
     {
-        //cout << "Redimensionando Matriz" << endl;
-        // Redimensionar
+        // cout << "Redimensionando Matriz" << endl;
+        //  Redimensionar
         RedimensionaMatrizMarcas();
     }
     pruebas[utilizados] = v;
@@ -869,7 +893,7 @@ void MatrizMarcas::RedimensionaMatrizMarcas()
 {
     int nueva_capacidad = capacidad * 2;
 
-    //cout << "Redimensionando matriz marcas hasta " << nueva_capacidad << endl;
+    // cout << "Redimensionando matriz marcas hasta " << nueva_capacidad << endl;
 
     VectorMarcas *tmp = new VectorMarcas[nueva_capacidad];
 

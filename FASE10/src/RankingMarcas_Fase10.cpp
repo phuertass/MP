@@ -97,8 +97,6 @@ int main(int argc, char **argv)
 	ifstream fi;
 	fi.open(fuente);
 	MatrizMarcas marcastotal;
-	bool primero = true;
-	VectorMarcas v1;
 	VectorMarcas v2;
 	while (!fi.eof())
 	{
@@ -114,39 +112,25 @@ int main(int argc, char **argv)
 
 			marcastotal = marcas + marcastotal;
 
-
 			// MOSTRAR RESULTADO
-
-			cout << endl;
-
 			if (marcas.EstaVacia())
 				cout << "Matriz vacia." << endl;
-			else
-			{
-
-				//cout << marcas << endl;
-
-				// Ordenar y mostar el resultado
-				//marcas.OrdenarPorTiempos();
-
-				cout << marcas << endl;
-
-				if (argc == 3)
-				{ // Guardar una copia después de ordenar
-
-					// if (EsFicheroTxt(fuente))
-					//	marcas.EscribirMatrizMarcas (destino, true);  // texto
-					// else
-					//	marcas.EscribirMatrizMarcas (destino, false); // binario
-				}
-			}
-			cout << endl;
 		}
 	}
 	fi.close();
 
 	marcastotal.OrdenarPorTiempos();
 	cout << marcastotal << endl;
+	
+	// Si se ha indicado un fichero de destino, se guardan las marcas
+	// ordenadas en ese fichero en forma texto
+	if (argc == 3)
+	{ // Guardar una copia después de ordenar
+		cout << fuente << " -> " << destino << endl;
+
+		marcastotal.EscribirMatrizMarcas (destino, true);  // texto
+
+	}
 
 	return 0;
 }

@@ -85,25 +85,31 @@ bool ExisteFichero (const string & nombre)
 
 bool EsFicheroTxt(const string &nombre_fichero)
 {
+	string extension = nombre_fichero.substr(nombre_fichero.length()-3, 3);
+	return (extension == "txt");
+
     // Comprobamos si la primera cadena del fichero
     // es una cabecera de fichero de marcas de texto o binaria
-    ifstream fi(nombre_fichero);
-
-    string cabecera;
-    getline(fi, cabecera);
-
-    bool esTxt = false;
-
-    if (cabecera == "MARCAS")
-        esTxt = true;
-
-    fi.close();
-
-    return esTxt;
+    //ifstream fi(nombre_fichero);
+//
+    //string cabecera;
+    //getline(fi, cabecera);
+//
+    //bool esTxt = false;
+//
+    //if (cabecera == "MARCAS")
+    //    esTxt = true;
+//
+    //fi.close();
+//
+    //return esTxt;
 }
 
 bool EsFicheroBin(const string &nombre_fichero)
 {
+	string extension = nombre_fichero.substr(nombre_fichero.length()-3, 3);
+	return (extension == "bin");
+	/*
     // Comprobamos si la primera cadena del fichero
     // es una cabecera de fichero de marcas de texto
     ifstream fi(nombre_fichero);
@@ -118,6 +124,6 @@ bool EsFicheroBin(const string &nombre_fichero)
 
     fi.close();
 
-    return esBin;
+    return esBin;*/
 }
 
