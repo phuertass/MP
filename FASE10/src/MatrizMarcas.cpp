@@ -340,12 +340,13 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
         // Leemos el nombre de la prueba que tiene una cantidad de bytes
         // de numero*sizeof(char)
         fi.read(buffer, sizeof(char) * numero);
+        buffer[numero] = '\0';
         string buffereado = string(buffer);
         // cout << "TAMAÑO ESPERADO: " << numero << endl;
         // cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
 
-        while (buffereado.size() > numero)
-            buffereado.pop_back();
+        // while (buffereado.size() > numero)
+        //     buffereado.pop_back();
 
         // cout << "SIZE BUFFEREADO: " << buffereado.size() << endl;
         nombre_pruebas[i] = buffereado;
@@ -370,11 +371,10 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
 
         // Lectura del nombre de la prueba
         fi.read(buffer, sizeof(char) * (tamanio));
+        buffer[tamanio] = '\0';
         string nombre_prueba = string(buffer);
-        // cout << "SIZE DEL STRING: " << nombre_prueba.size() << endl;
-        // cout << "Nombre de la prueba: " << nombre_prueba << endl;
-        while (nombre_prueba.size() > tamanio)
-            nombre_prueba.pop_back();
+        // while (nombre_prueba.size() > tamanio)
+        //     nombre_prueba.pop_back();
 
         // cout << "Nombre de la prueba arreglado: " << nombre_prueba << endl;
 
@@ -388,10 +388,11 @@ void MatrizMarcas::LeerMatrizMarcasBin(const string &nombre)
         // cout << "Tamano de la licencia: " << tamanio << endl;
         //   Lectura de la licencia
         fi.read(buffer, sizeof(char) * tamanio);
+        buffer[tamanio] = '\0';
         string licencia = string(buffer);
         // cout << "Licencia: " << licencia << endl;
-        while (licencia.size() > tamanio)
-            licencia.pop_back();
+        // while (licencia.size() > tamanio)
+        //    licencia.pop_back();
         // cout << "Licencia leida arreglada: " << licencia << endl;
 
         // Lectura del tiempo
@@ -429,29 +430,84 @@ void MatrizMarcas::LeerMatrizMarcasTxt(const string &nombre_fichero)
         cout << "No existe el fichero " << nombre_fichero << endl;
         exit(1);
     }
-    string cabecera;
 
-    char c = fi.peek();
-
-    // Lee fichero de marcas
-    if (c == 'M')
+    if (fi.peek() != 'M')
     {
-        fi >> cabecera;
+        cout << "El fichero no es de marcas" << endl;
+        exit(1);
+    }
+
+    string cabecera;
+    // Lee fichero de marcas
+    fi >> cabecera;
+    fi.ignore(1000, '\n');
+
+    //cabecera = "";
+    //while (cabecera[0] == '#' or cabecera.length() == 0)
+    //{
+    //    getline(fi, cabecera);
+    //    if (cabecera[0] != '#')
+    //        break;
+    //}
+
+    while(fi.peek() == '#' or fi.peek() == '\n' or fi.peek() == ' ')
         fi.ignore(1000, '\n');
 
-        cabecera = "";
-        while (cabecera[0] == '#' or cabecera.length() == 0)
+    // fi >> *this;
+
+    int n;
+    fi >> n;
+    //  Vector de string para almacenar los nombres de las pruebas
+    string pruebas[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        fi >> pruebas[i];
+    }
+
+    LiberaMatrizMarcas();
+    ReservaMemoria(n);
+    capacidad = n;
+    utilizados = 0;
+
+    for (int i = 1; i <= n; i++)
+        *this += (VectorMarcas(n, pruebas[i - 1]));
+
+    int TAM_CAD = 100;
+    char valor[TAM_CAD];
+
+    while (!fi.eof())
+    {
+
+        // Lectura de datos y creacion de objetos de RegistroDeMarca
+        // Cada vez que creamos un objeto lo añadimos al vector de marcas de la prueba
+        // que le corresponde
+        fi >> valor;
+
+        string tipo_prueba = valor;
+
+        // Si el ultimo elemento leido no es un tiempo
+        if (tipo_prueba.length() < 7)
         {
-            getline(fi, cabecera);
-            // cout << "cab---->" << cabecera << endl;
-            if (cabecera[0] != '#')
-                break;
+            fi >> valor;
+            Fecha fecha = Fecha(valor);
+
+            fi >> valor;
+            string licencia = valor;
+
+            fi >> valor;
+            Tiempo tiempo = Tiempo(valor);
+
+            RegistroDeMarca registro(fecha, licencia, tiempo);
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (tipo_prueba == this->pruebas[i - 1].GetNombre())
+                {
+                    this->pruebas[i - 1] += registro;
+                }
+            }
         }
-
-        // while (fi.peek() == '#')
-        //     fi.ignore(1000, '\n');
-
-        fi >> *this;
     }
 
     return;
@@ -574,8 +630,8 @@ MatrizMarcas operator+(const MatrizMarcas &m1, const MatrizMarcas &m2)
             string nombre1 = m3.pruebas[i].GetNombre();
             string nombre2 = m2.pruebas[j].GetNombre();
 
-            //cout << "nombre1: " << nombre1 << endl;
-            //cout << "nombre2: " << nombre2 << endl;
+            // cout << "nombre1: " << nombre1 << endl;
+            // cout << "nombre2: " << nombre2 << endl;
 
             bool iguales = nombre1 == nombre2;
             //(iguales) ? cout << "son iguales" << endl : cout << "no son iguales" << endl;
@@ -586,16 +642,16 @@ MatrizMarcas operator+(const MatrizMarcas &m1, const MatrizMarcas &m2)
                 VectorMarcas v1 = m3.pruebas[i];
                 VectorMarcas v2 = m2.pruebas[j];
 
-                //cout << "v1: " << v1 << endl;
-                //cout << "v2: " << v2 << endl;
+                // cout << "v1: " << v1 << endl;
+                // cout << "v2: " << v2 << endl;
 
                 VectorMarcas v3 = v1 + v2;
-                //cout << "v3: " << v3 << endl;
+                // cout << "v3: " << v3 << endl;
 
                 v3.SetNombre(nombre1);
                 m3.pruebas[i] = v3;
 
-                //cout << "MATRIZ AFTER: " << m3 << endl;
+                // cout << "MATRIZ AFTER: " << m3 << endl;
             }
         }
     }
@@ -797,25 +853,27 @@ istream &operator>>(istream &is, MatrizMarcas &m)
         is >> valor;
 
         string tipo_prueba = valor;
-        if (tipo_prueba.length() > 7)
-            break;
 
-        is >> valor;
-        Fecha fecha = Fecha(valor);
-
-        is >> valor;
-        string licencia = valor;
-
-        is >> valor;
-        Tiempo tiempo = Tiempo(valor);
-
-        RegistroDeMarca registro(fecha, licencia, tiempo);
-
-        for (int i = 1; i <= n; i++)
+        // Si el ultimo elemento leido no es un tiempo
+        if (tipo_prueba.length() < 7)
         {
-            if (tipo_prueba == m[i].GetNombre())
+            is >> valor;
+            Fecha fecha = Fecha(valor);
+
+            is >> valor;
+            string licencia = valor;
+
+            is >> valor;
+            Tiempo tiempo = Tiempo(valor);
+
+            RegistroDeMarca registro(fecha, licencia, tiempo);
+
+            for (int i = 1; i <= n; i++)
             {
-                m[i] += registro;
+                if (tipo_prueba == m[i].GetNombre())
+                {
+                    m[i] += registro;
+                }
             }
         }
     }
