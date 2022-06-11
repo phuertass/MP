@@ -122,7 +122,7 @@ VectorMarcas ::VectorMarcas(const string &nombre)
 		Fecha fecha(valor);
 
 		fi >> valor;
-		string licencia = valor;
+		Licencia licencia = valor;
 
 		fi >> valor;
 		Tiempo tiempo = Tiempo(valor);
@@ -606,8 +606,8 @@ void VectorMarcas::OrdenarPorNombre(bool asc)
 	{
 		for (int j = i + 1; j < num_marcas; j++)
 		{
-			string n1 = las_marcas[i].GetLicencia();
-			string n2 = las_marcas[j].GetLicencia();
+			Licencia n1 = las_marcas[i].GetLicencia();
+			Licencia n2 = las_marcas[j].GetLicencia();
 
 			if(asc == true && n1 > n2){
 				Intercambia(i,j);

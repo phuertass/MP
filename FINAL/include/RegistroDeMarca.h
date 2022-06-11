@@ -15,6 +15,7 @@
 #include <string>
 #include "Tiempo.h"
 #include "Fecha.h"
+#include "Licencia.h"
 #include "utils.h"
 using namespace std;
 
@@ -25,7 +26,7 @@ class RegistroDeMarca
 
 private:
 	Fecha fecha_marca;	 // Fecha de la marca
-	string licencia;	 // Licencia del atleta
+	Licencia licencia;	 // Licencia del atleta
 	Tiempo tiempo_marca; // Tiempo registrado
 
 public:
@@ -39,7 +40,7 @@ public:
 	// Constructor directo.
 	// Parámetros: trivial.
 
-	RegistroDeMarca(Fecha la_fecha_marca, string la_licencia,
+	RegistroDeMarca(Fecha la_fecha_marca, Licencia la_licencia,
 					Tiempo el_tiempo_marca);
 
 	/***********************************************************************/
@@ -51,7 +52,7 @@ public:
 	// Métodos Get
 
 	Fecha GetFecha(void) const;
-	string GetLicencia(void) const;
+	Licencia GetLicencia(void) const;
 	Tiempo GetTiempo(void) const;
 
 	/***********************************************************************/

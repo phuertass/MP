@@ -13,7 +13,7 @@ LIB = $(HOME)/lib
 CXX = g++ 
 CXXFLAGS = -std=c++14 -I./include
 
-OBJETOS =$(BIN)/RankingMarcas_Fase10
+OBJETOS =$(BIN)/RankingMarcas_Fase10 $(OBJ)/Licencia.o
 
 
 OPCIONALES = 
@@ -37,7 +37,7 @@ $(BIN)/% : $(OBJ)/%.o
 $(BIN)/RankingMarcas_Fase10 : $(OBJ)/RankingMarcas_Fase10.o \
 $(LIB)/libMatrizMarcas.a $(LIB)/libVectorMarcas.a \
 $(LIB)/libRegistroDeMarca.a
-	@echo Creando II_Demo-MatrizMarcas
+	@echo Creando RankingMarcas_Fase10
 	$(CXX) -o $(BIN)/RankingMarcas_Fase10 \
 	$(OBJ)/RankingMarcas_Fase10.o $(CXXFLAGS)  \
 	-lMatrizMarcas -lVectorMarcas -lRegistroDeMarca -L$(LIB)
@@ -64,21 +64,6 @@ $(LIB)/libRegistroDeMarca.a
 
 
 
-$(BIN)/Prueba_VectorMarcas_Fase8 : $(OBJ)/Prueba_VectorMarcas_Fase8.o \
-$(LIB)/libVectorMarcas.a $(LIB)/libRegistroDeMarca.a $(OBJ)/utils.o
-	@echo Creando Prueba_VectorMarcas_Fase8
-	$(CXX) -o $(BIN)/Prueba_VectorMarcas_Fase8 \
-	$(OBJ)/Prueba_VectorMarcas_Fase8.o $(OBJ)/utils.o $(CXXFLAGS)  \
-	-lVectorMarcas -lRegistroDeMarca -L$(LIB)
-	@echo
-
-$(BIN)/Prueba_MatrizMarcas_Fase8 : $(OBJ)/Prueba_MatrizMarcas_Fase8.o \
-$(LIB)/libMatrizMarcas.a $(LIB)/libRegistroDeMarca.a
-	@echo Creando Prueba_MatrizMarcas_Fase8
-	$(CXX) -o $(BIN)/Prueba_MatrizMarcas_Fase8 \
-	$(OBJ)/Prueba_MatrizMarcas_Fase8.o $(CXXFLAGS)  \
-	-lMatrizMarcas -lVectorMarcas -lRegistroDeMarca -L$(LIB)
-	@echo
 
 
 ###############################################################################
@@ -121,6 +106,12 @@ $(OBJ)/Fecha.o : $(SRC)/Fecha.cpp
 	$(SRC)/Fecha.cpp  $(CXXFLAGS)
 	@echo
 
+$(OBJ)/Licencia.o : $(SRC)/Licencia.cpp
+	@echo Creando Licencia.o
+	$(CXX) -c -o $(OBJ)/Licencia.o  \
+	$(SRC)/Licencia.cpp  $(CXXFLAGS)
+	@echo
+
 $(OBJ)/utils.o : $(SRC)/utils.cpp 
 	@echo Creando utils.o
 	$(CXX) -c -o $(OBJ)/utils.o  \
@@ -138,15 +129,16 @@ arbol :
 
 
 $(LIB)/libRegistroDeMarca.a : $(OBJ)/RegistroDeMarca.o $(OBJ)/Tiempo.o\
-$(OBJ)/utils.o $(OBJ)/Fecha.o
+$(OBJ)/utils.o $(OBJ)/Fecha.o $(OBJ)/Licencia.o
 	@echo Creando biblioteca: libRegistroDeMarca.a 
 	ar rvs $(LIB)/libRegistroDeMarca.a \
-	$(OBJ)/RegistroDeMarca.o $(OBJ)/Tiempo.o $(OBJ)/utils.o $(OBJ)/Fecha.o
+	$(OBJ)/RegistroDeMarca.o $(OBJ)/Tiempo.o $(OBJ)/utils.o $(OBJ)/Fecha.o \
+	$(OBJ)/Licencia.o
 	@echo
  
 $(OBJ)/RegistroDeMarca.o : $(SRC)/RegistroDeMarca.cpp \
 $(INCLUDE)/MatrizMarcas.h $(INCLUDE)/Tiempo.h $(INCLUDE)/utils.h \
-$(INCLUDE)/Fecha.h
+$(INCLUDE)/Fecha.h $(INCLUDE)/Licencia.h
 	@echo Creando RegistroDeMarca.o
 	$(CXX) -c -o $(OBJ)/RegistroDeMarca.o  \
 	$(SRC)/RegistroDeMarca.cpp  $(CXXFLAGS)

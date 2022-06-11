@@ -120,6 +120,7 @@ int main(int argc, char **argv)
 	fi.close();
 
 	marcastotal.OrdenarPorTiempos(true, 0, marcastotal.NumFilas());
+	//marcastotal.OrdenarPorNombre(false, 0, marcastotal.NumFilas());
 
 	cout << marcastotal << endl;
 	
@@ -132,6 +133,7 @@ int main(int argc, char **argv)
 		marcastotal.EscribirMatrizMarcas (destino, true);  // texto
 
 	}
+
 
 	return 0;
 }

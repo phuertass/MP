@@ -188,8 +188,7 @@ void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const
     char *cad = (char*)"MARCAS_BIN\n";
     fo.write(cad, strlen(cad));
 
-    // cad = "# Comentario escrito desde la clase MatrizMarcas\n";
-    // fo.write(cad, strlen(cad));
+
     int num_marcas = this->getNumPruebas();
     fo.write((char *)&num_marcas, sizeof(int));
 
@@ -208,17 +207,13 @@ void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const
             string nombre_prueba = pruebas[i].GetNombre();
             int tam_prueba = nombre_prueba.size();
             fo.write((char *)&tam_prueba, sizeof(int));
-            // cout << "Nombre de marca es " << nombre_prueba << endl;
             fo.write((const char *)nombre_prueba.c_str(), nombre_prueba.length());
 
             RegistroDeMarca r = this->pruebas[i][j];
             Fecha f = r.GetFecha();
-            string licencia = r.GetLicencia();
+            Licencia licencia = r.GetLicencia();
             int sizelicencia = licencia.size();
-            // cout << licencia << " SIZE " << sizelicencia << endl;
 
-            const char *licenciac = licencia.c_str();
-            // cout << licenciac << " " << strlen(licenciac) << endl;
             Tiempo t = r.GetTiempo();
 
             // Debemos escribir la fecha con el formato de dia/mes/anio
@@ -229,7 +224,7 @@ void MatrizMarcas::EscribirMatrizMarcasBin(const string &nombre) const
             // Escribo la fecha
             fo.write((char *)&f, sizeof(Fecha));
             fo.write((char *)&sizelicencia, sizeof(int));
-            fo.write(licenciac, sizelicencia);
+            fo.write(licencia.ToChar(), sizelicencia);
             // fo.write((char *)&licencia, sizeof(string));
             fo.write((char *)&t, sizeof(Tiempo));
         }

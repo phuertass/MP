@@ -28,7 +28,7 @@ RegistroDeMarca ::RegistroDeMarca(void){};
 // Parámetros: triviales.
 
 RegistroDeMarca ::RegistroDeMarca(Fecha la_fecha_marca,
-								  string la_licencia,
+								  Licencia la_licencia,
 								  Tiempo el_tiempo_marca)
 	: fecha_marca(la_fecha_marca),
 	  licencia(la_licencia),
@@ -63,7 +63,7 @@ Fecha RegistroDeMarca ::GetFecha(void) const
 	return fecha_marca;
 }
 
-string RegistroDeMarca ::GetLicencia(void) const
+Licencia RegistroDeMarca ::GetLicencia(void) const
 {
 	return licencia;
 }
@@ -78,7 +78,7 @@ Tiempo RegistroDeMarca ::GetTiempo(void) const
 
 string RegistroDeMarca ::ToString(void) const
 {
-	string cad = ::ToString(GetLicencia(), 12) + "   " +
+	string cad = ::ToString(GetLicencia().GetNombre(), 12) + "   " +
 				 GetFecha().ToString() + "  " +
 				 GetTiempo().ToString(CategoriaTiempo::minutos);
 	return cad;
