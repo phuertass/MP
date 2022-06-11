@@ -1,10 +1,12 @@
 /***************************************************************************/
 /***************************************************************************/
-// FUNDAMENTOS DE PROGRAMACIÓN
+// METODOLOGIA DE LA PROGRAMACION
 //
 // PABLO HUERTAS ARROYO
 //
-// Fichero: ClasesRankingMarcas.cpp
+// Proyecto Gestion de marcas de atletismo
+//
+// Fichero: RegistroDeMarca.cpp
 //
 /***************************************************************************/
 /***************************************************************************/

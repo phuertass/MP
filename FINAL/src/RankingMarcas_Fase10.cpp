@@ -1,38 +1,12 @@
 /***************************************************************************/
 /***************************************************************************/
-// METODOLOGÍA DE LA PROGRAMACIÓN
+// METODOLOGIA DE LA PROGRAMACION
 //
-// (C) FRANCISCO JOSÉ CORTIJO BON
-// DEPARTAMENTO DE CIENCIAS DE LA COMPUTACIÓN E INTELIGENCIA ARTIFICIAL
+// PABLO HUERTAS ARROYO
 //
-// Proyecto. Fase 9.
+// Proyecto Gestion de marcas de atletismo
 //
-// Incluye:
-//	* Constructor de copia (y otros constructores)
-//	* Destructor
-//	* Operador de asignación
-//	* Operadores de acceso () y []
-//  * Operadores binarios + y -
-//  * Operadores combinados += y -=
-//  * Operadores << y >>
-//	* Constructor desde fichero y métodos de E/S
-//	* NOVEDAD: Gestión de flujos binarios.
-//
-// Fichero: RankingMarcas_Fase9.cpp
-//
-// Uso: RankingMarcas_Fase9 <fich_marcas_entrada> [<fich_marcas_salida>]
-//
-// Lee el fichero de marcas <fich_marcas_entrada>, ordena las marcas por
-// prueba (ordenación creciente por tiempo) y muestra el resultado de
-// la ordenación.
-// Si se indica un nombre del fichero de marcas <fich_marcas_salida> para
-// el resultado, se guardan las marcas ordenadas en ese fichero.
-//
-// IMPORTANTE:
-//	1) El fichero <fich_marcas_entrada> puede ser de texto o binario.
-//  2) Los formatos de <fich_marcas_entrada> y <fich_marcas_salida> son iguales
-//
-// FASE 9
+// Fichero: RankingMarcas_Fase10.cpp
 //
 /***************************************************************************/
 /***************************************************************************/

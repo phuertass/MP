@@ -1,3 +1,15 @@
+/***************************************************************************/
+/***************************************************************************/
+// METODOLOGIA DE LA PROGRAMACION
+//
+// PABLO HUERTAS ARROYO
+//
+// Proyecto Gestion de marcas de atletismo
+//
+// Fichero: utils.h
+//
+/***************************************************************************/
+/***************************************************************************/
 #ifndef UTILS_H
 #define UTILS_H
 
@@ -37,11 +49,19 @@ string ToString (int entero, int num_casillas, char relleno);
 
 string ToString (string la_cadena, int num_casillas, char relleno=' '); 
 
-
+/***************************************************************************/
+// Devuelve true si el fichero "nombre_fichero" existe.
+// False en caso contrario.
 bool ExisteFichero (const string & nombre);
 
+/***************************************************************************/
+// Devuelve true si el fichero es de texto.
+// Debe existir el fichero.
 bool EsFicheroTxt (const string & nombre);
 
+/***************************************************************************/
+// Devuelve true si el fichero es binario.
+// Debe existir el fichero.
 bool EsFicheroBin (const string & nombre);
 
 

@@ -23,7 +23,7 @@ OPCIONALES =
 
 ###############################################################################
 
-all : preambulo $(OBJETOS) $(OPCIONALES) final 
+all : preambulo $(OBJETOS) $(OPCIONALES) arbol final 
 
 ###############################################################################
 #EJECUTABLES
