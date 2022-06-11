@@ -56,8 +56,7 @@ VectorMarcas::VectorMarcas(int capacidad_inicial, string n)
 
 VectorMarcas::VectorMarcas(const VectorMarcas &v)
 {
-	ReservaMemoria(v.capacidad);
-	CopiarDatos(v);
+	*this = v;
 }
 
 /**
@@ -562,7 +561,7 @@ void VectorMarcas::EliminaVectorMarcas(const int num_casilla)
 }
 
 // FUNCIONES DE ORDENACION
-void VectorMarcas::OrdenarPorTiempos()
+void VectorMarcas::OrdenarPorTiempos(const bool asc)
 {
 	for (int i = 0; i < num_marcas; i++)
 	{
@@ -570,53 +569,18 @@ void VectorMarcas::OrdenarPorTiempos()
 		{
 			Tiempo t1 = las_marcas[i].GetTiempo();
 			Tiempo t2 = las_marcas[j].GetTiempo();
-			// if(EsMayorTiempo(t1, t2)){
-			//	Intercambia(i, j);
-			// }
-			if (t1 > t2)
-			{
-				Intercambia(i, j);
+
+			if(asc == true && t1 > t2){
+				Intercambia(i,j);
+			}else if(asc == false && t1 < t2){
+				Intercambia(i,j);
 			}
 		}
 	}
 }
 
-bool VectorMarcas::EsMayorTiempo(Tiempo t1, Tiempo t2)
-{
-	int horas1 = t1.GetHoras();
-	int horas2 = t2.GetHoras();
-	int minutos1 = t1.GetMinutos();
-	int minutos2 = t2.GetMinutos();
-	int segundos1 = t1.GetSegundos();
-	int segundos2 = t2.GetSegundos();
-	int milesimas1 = t1.GetMilesimas();
-	int milesimas2 = t2.GetMilesimas();
 
-	bool esmayor = true;
-	if (horas1 > horas2)
-	{
-		esmayor = true;
-	}
-	else if (horas1 == horas2 && minutos1 > minutos2)
-	{
-		esmayor = true;
-	}
-	else if (horas1 == horas2 && minutos1 == minutos2 && segundos1 > segundos2)
-	{
-		esmayor = true;
-	}
-	else if (horas1 == horas2 && minutos1 == minutos2 && segundos1 == segundos2 && milesimas1 > milesimas2)
-	{
-		esmayor = true;
-	}
-	else
-	{
-		esmayor = false;
-	}
-	return esmayor;
-}
-
-void VectorMarcas::OrdenarPorFecha()
+void VectorMarcas::OrdenarPorFecha(const bool asc)
 {
 	for (int i = 0; i < num_marcas; i++)
 	{
@@ -624,57 +588,33 @@ void VectorMarcas::OrdenarPorFecha()
 		{
 			Fecha f1 = las_marcas[i].GetFecha();
 			Fecha f2 = las_marcas[j].GetFecha();
-			// if(EsMayorFecha(f1, f2)){
-			//	Intercambia(i, j);
-			// }
 
-			if (f1 < f2)
-				Intercambia(i, j);
+			if(asc == true && f1 > f2){
+				Intercambia(i,j);
+			}else if(asc == false && f1 < f2){
+				Intercambia(i,j);
+			}
 		}
 	}
 }
 
-bool VectorMarcas::EsMayorFecha(Fecha f1, Fecha f2)
-{
-	int dia1 = f1.GetDia();
-	int dia2 = f2.GetDia();
-	int mes1 = f1.GetMes();
-	int mes2 = f2.GetMes();
-	int anio1 = f1.GetAnio();
-	int anio2 = f2.GetAnio();
 
-	bool esmayor = true;
-	if (anio1 > anio2)
-	{
-		esmayor = true;
-	}
-	else if (anio1 == anio2 && mes1 > mes2)
-	{
-		esmayor = true;
-	}
-	else if (anio1 == anio2 && mes1 == mes2 && dia1 > dia2)
-	{
-		esmayor = true;
-	}
-	else
-	{
-		esmayor = false;
-	}
-	return esmayor;
-}
-
-void VectorMarcas::OrdenarPorNombre()
+void VectorMarcas::OrdenarPorNombre(bool asc)
 {
+
 	for (int i = 0; i < num_marcas; i++)
 	{
 		for (int j = i + 1; j < num_marcas; j++)
 		{
 			string n1 = las_marcas[i].GetLicencia();
 			string n2 = las_marcas[j].GetLicencia();
-			if (n1 > n2)
-			{
-				Intercambia(i, j);
+
+			if(asc == true && n1 > n2){
+				Intercambia(i,j);
+			}else if(asc == false && n1 < n2){
+				Intercambia(i,j);
 			}
+
 		}
 	}
 }

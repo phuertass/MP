@@ -82,18 +82,3 @@ bool ExisteFichero (const string & nombre)
 
 	return ((problema) ? false : true);
 }
-
-bool EsFicheroTxt(const string &nombre_fichero)
-{
-	string extension = nombre_fichero.substr(nombre_fichero.length()-3, 3);
-	return (extension == "txt");
-
-}
-
-bool EsFicheroBin(const string &nombre_fichero)
-{
-	string extension = nombre_fichero.substr(nombre_fichero.length()-3, 3);
-	return (extension == "bin");
-
-}
-

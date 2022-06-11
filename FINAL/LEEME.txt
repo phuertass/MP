@@ -1,0 +1,21 @@
+PABLO HUERTAS ARROYO 77033078Y
+
+El cambio que he tenido que realizar para la resolucion de esta prueba es cambiar en la funcion main la llamada que se hace al metodo de la clase MatrizMarcas de OrdenarPorTiempos al metodo OrdenarPorNombre
+
+Esto directamente agrupa la matriz por el tipo de prueba y dentro de cada tipo de prueba vienen ordenadas por el nombre en sentido ascendente
+Para ordenarlas en sentido decreciente basta con pasarle como parametro a la funcion un booleano false, (por defecto es true y ordena de forma creciente), y con esto bastaria para ordenarlas en sentido decreciente
+
+Otra opcion seria haber cogido la funcion de ejemplo de m.Ordena(1,m.numfilas()) pero en mi caso he desarrollado los metodos de ordenacion independientes ya que me parece mas flexible poder llamar a cada funcion de ordenacion en la funcion main independientemente de tener que declararlo asi explicitamente en dicha funcion proporcionada
+
+Si tuve presente esta posibilidad de modificacion ya que venia en el guion de desarrollo del proyecto y ya tenia implementadas las ordenaciones de la matriz de marcas por tiempos, por licencias y por fechas
+
+La clase licencia no la tengo implementada ya que no he entendido bien el objetivo de una clase con un string mas alla del reservar memoria y los operadores relacionales, pero al ser un objeto string el que he utilizado en vez de una cadena clasica de C, todos estos operadores y reservas de memoria vienen ya implementados por lo que he decidido usar un objeto de la clase string para los campos de licencia de las demas clases
+
+
+Para compilar el proyecto ejecutar  make -f MP_Proyecto_Fase10.mak y ejecutar o bien:
+
+bin/RankingMarcas_Fase8 todas_marcas_nacional_2021.txt
+ó
+bin/RankingMarcas_Fase10 data/nombres_ficheros_de_todo.txt
+
+Están estos dos mains resueltos ya que la fase sobre la que he trabajado es la FASE10

@@ -23,7 +23,7 @@
 #include "utils.h"
 
 #include "VectorMarcas.h"
-//#define DEBUG_FUNCS_VECTOR_DINAMICO
+#define DEBUG_FUNCS_VECTOR_DINAMICO
 
 using namespace std;
 
@@ -143,17 +143,7 @@ VectorMarcas::VectorMarcas(const string &nombre_fichero_marcas,
 						   const string &nombre_prueba)
 {
 	ReservaMemoria(0);
-	if(ExisteFichero(nombre_fichero_marcas))
-	{
-		LeerVectorMarcas(nombre_fichero_marcas);
-		nombre = nombre_prueba;
-	}
-	else
-	{
-		cerr << "No existe el fichero " << nombre_fichero_marcas << endl;
-		exit(1);
-	}
-
+	nombre = nombre_prueba;
 }
 
 /**
@@ -300,11 +290,7 @@ VectorMarcas &VectorMarcas::operator+=(const VectorMarcas &v)
 {
 	for (int i = 0; i < v.num_marcas; i++)
 	{
-		RegistroDeMarca r = v.las_marcas[i];
-		//cout << this->capacidad << endl;
-		AniadeVectorMarcas(r);
-		//cout << this->capacidad << endl;
-		//cout << "Aniadido" << endl;
+		AniadeVectorMarcas(v.las_marcas[i]);
 	}
 	return *this;
 }
@@ -477,12 +463,10 @@ void VectorMarcas::Clona(const VectorMarcas &origen)
 void VectorMarcas::AniadeVectorMarcas(const TipoBaseVector valor)
 {
 	// Si no cabe --> redimensionar
-	//cout << *this << endl;
-	//cout << "num_marcas: " << num_marcas << endl;
-	//cout << "capacidad: " << capacidad << endl;
+
 	if (num_marcas == capacidad)
 	{
-		//cout << "Redimensionando vector" << endl;
+		cout << "Redimensionando vector" << endl;
 		// Redimensionar
 		RedimensionaVectorMarcas();
 	}
@@ -491,7 +475,6 @@ void VectorMarcas::AniadeVectorMarcas(const TipoBaseVector valor)
 
 	las_marcas[num_marcas] = valor;
 	num_marcas++;
-	//cout << *this << endl;
 }
 
 /***************************************************************************/

@@ -671,7 +671,7 @@ void VectorMarcas::OrdenarPorNombre()
 		{
 			string n1 = las_marcas[i].GetLicencia();
 			string n2 = las_marcas[j].GetLicencia();
-			if (n1 > n2)
+			if (n1 < n2)
 			{
 				Intercambia(i, j);
 			}
